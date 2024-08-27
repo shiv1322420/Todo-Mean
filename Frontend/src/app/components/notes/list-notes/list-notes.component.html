@@ -1,0 +1,53 @@
+<div class="h-screen flex flex-col items-center p-6 md:p-12 bg-gray-100">
+    <div class="w-full max-w-4xl flex flex-col md:flex-row justify-between items-center mb-6">
+      <h1 class="font-extrabold text-2xl md:text-3xl text-gray-800">List of Tasks</h1>
+      <input 
+        type="text" 
+        placeholder="Search by title" 
+        [formControl]="titleControl"
+        class="px-4 py-2 border rounded-lg"
+      />
+      <select 
+      [formControl]="statusControl" 
+      class="px-4 py-2 border rounded-lg"
+
+    >
+      <option value="">Select Status</option>
+      <option *ngFor="let status of statusTypes" [value]="status">{{ status }}</option>
+    </select>
+      <a href="#" routerLink="/notes/create" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Add Task</a>
+    </div>
+    <div class="md:w-full max-w-4xl">
+      <div *ngIf="notes.length === 0" class="text-center text-gray-600 py-4">
+        <p>No records found</p>
+      </div>
+      <table *ngIf="notes.length > 0" class="table-auto bg-white shadow-md rounded-lg overflow-hidden">
+        <thead class="bg-gray-200 text-gray-600">
+          <tr>
+            <th class="py-2 px-4 border-b">Id</th>
+            <th class="py-2 px-4 border-b">Title</th>
+            <th class="py-2 px-4 border-b">Description</th>
+            <th class="py-2 px-4 border-b">Status</th>
+            <th class="py-2 px-4 border-b">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let note of notes">
+            <td class="py-2 px-4 border-b">{{note.id}}</td>
+            <td class="py-2 px-4 border-b">{{note.title}}</td>
+            <td class="py-2 px-4 border-b">{{note.description}}</td>
+            <td class="py-2 px-4 border-b">{{note.status}}</td>
+            <td class="py-2 px-4 border-b p-2">
+                <div class="flex flex-wrap  md:space-x-2 space-x-1 space-y-2 md:space-y-0">
+                    <a href="#" [routerLink]="['/notes', note.id, 'view']"  class="bg-slate-500 text-white text-center   px-4 py-2 rounded hover:bg-blue-600 transition">View Task</a>
+                    <a href="#" [routerLink]="['/notes', note.id, 'edit']" class="bg-blue-500 text-white text-center px-4 py-2 rounded hover:bg-blue-600 transition">Edit Task</a>
+                    <button type="button" class="bg-red-500 text-white text-center px-4 py-2 rounded hover:bg-blue-600 transition"    (click)="deleteNote(note.id)">Delete Task</button>
+                </div>
+               
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
